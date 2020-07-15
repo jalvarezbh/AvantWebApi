@@ -1,6 +1,7 @@
 ﻿using AvantLifeWebBase.Model;
 using System;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace AvantLifeWebBase
 {
@@ -9,7 +10,13 @@ namespace AvantLifeWebBase
         public void IncluirProposta(PropostaModel proposta)
         {
             try
-            {               
+            {
+                String celular = Regex.Replace(proposta.Celular, @"[^\w\d]", "");
+                proposta.Celular = celular;
+                string dataNascimento = proposta.DataNascimento.ToString("yyyy-MM-dd");
+                String valorMensal = proposta.ValorMensal.ToString().Replace(',', '.');
+                string dataInicio = proposta.DataInicio.ToString("yyyy-MM-dd");
+
                 using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
                 {
                     connection.Open();
@@ -32,21 +39,22 @@ namespace AvantLifeWebBase
                                        ID_USUARIO,        
                                        ID_EMPRESA)    
                                        VALUES (
-                                       {proposta.Nome},
-                                       {proposta.Celular},
-                                       {proposta.Email},
-                                       {proposta.DataNascimento},
-                                       {proposta.PossuiFilho},
-                                       {proposta.Id_Produto},
-                                       {proposta.Id_Produto_Valores},
-                                       {proposta.ValorMensal},
-                                       {proposta.FormaPagamento},
+                                       '{proposta.Nome}',
+                                       '{proposta.Celular}',
+                                       '{proposta.Email}',
+                                       '{dataNascimento}',
+                                       '{proposta.PossuiFilho}',
+                                       {proposta.NumeroApolice},
+                                       '{proposta.IdProduto}',
+                                       '{proposta.IdProdutoValores}',
+                                       {valorMensal},
+                                       '{proposta.FormaPagamento}',
                                        {proposta.DiaPagamento},
-                                       {proposta.DataInicio},
-                                       {proposta.Situacao},
-                                       1,
-                                       {proposta.Id_Usuario},
-                                       {proposta.Id_Empresa})";
+                                       '{dataInicio}',
+                                       '{proposta.Situacao}',
+                                       '{proposta.Ativo}',
+                                       '{proposta.IdUsuario}',
+                                       '{proposta.IdEmpresa}')";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {

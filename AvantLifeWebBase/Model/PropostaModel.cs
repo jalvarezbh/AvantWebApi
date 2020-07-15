@@ -18,9 +18,9 @@ namespace AvantLifeWebBase.Model
 
         public long NumeroApolice { get; set; }
 
-        public Guid Id_Produto { get; set; }
+        public Guid IdProduto { get; set; }
 
-        public Guid Id_Produto_Valores { get; set; }
+        public Guid IdProdutoValores { get; set; }
 
         public Decimal ValorMensal { get; set; }
 
@@ -34,8 +34,8 @@ namespace AvantLifeWebBase.Model
 
         public bool Ativo { get; set; }
 
-        public Guid Id_Usuario { get; set; }
+        public Guid IdUsuario { get; set; }
 
-        public Guid Id_Empresa { get; set; }
+        public Guid IdEmpresa { get; set; }
     }
 }

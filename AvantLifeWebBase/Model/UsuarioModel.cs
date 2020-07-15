@@ -18,6 +18,6 @@ namespace AvantLifeWebBase.Model
 
         public String Celular { get; set; }
 
-        public Guid Id_Empresa { get; set; }
+        public Guid IdEmpresa { get; set; }
     }
 }

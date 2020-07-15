@@ -37,7 +37,7 @@ namespace AvantLifeWebBase
                                 login.Id = Guid.Parse(reader["ID"].ToString());
                                 login.Nome = reader["NOME"].ToString();
                                 login.Email = reader["EMAIL"].ToString();
-                                login.Id_Empresa = Guid.Parse(reader["ID_EMPRESA"].ToString());
+                                login.IdEmpresa = Guid.Parse(reader["ID_EMPRESA"].ToString());
                             }
 
                             return login;
@@ -87,7 +87,7 @@ namespace AvantLifeWebBase
                                 usuario.CPF = reader["CPF"].ToString();
                                 usuario.Telefone = reader["TELEFONE"].ToString();
                                 usuario.Celular = reader["CELULAR"].ToString();
-                                usuario.Id_Empresa = Guid.Parse(reader["ID_EMPRESA"].ToString());
+                                usuario.IdEmpresa = Guid.Parse(reader["ID_EMPRESA"].ToString());
                             }
 
                             return usuario;

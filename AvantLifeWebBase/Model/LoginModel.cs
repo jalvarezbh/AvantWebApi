@@ -12,7 +12,7 @@ namespace AvantLifeWebBase.Model
 
         public String Senha { get; set; }
 
-        public Guid Id_Empresa { get; set; }
+        public Guid IdEmpresa { get; set; }
 
     }
 }
