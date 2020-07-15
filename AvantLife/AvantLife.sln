@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvantLifeWeb", "..\AvantLifeWeb\AvantLifeWeb.csproj", "{F7F93514-507A-4D85-8A9B-575DAA5BF92B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvantLifeWebBase", "..\AvantLifeWebBase\AvantLifeWebBase.csproj", "{A34C045D-D7FB-4802-B504-8C918C578E52}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7F93514-507A-4D85-8A9B-575DAA5BF92B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7F93514-507A-4D85-8A9B-575DAA5BF92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7F93514-507A-4D85-8A9B-575DAA5BF92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7F93514-507A-4D85-8A9B-575DAA5BF92B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34C045D-D7FB-4802-B504-8C918C578E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34C045D-D7FB-4802-B504-8C918C578E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34C045D-D7FB-4802-B504-8C918C578E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34C045D-D7FB-4802-B504-8C918C578E52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB6FA552-2DA5-4C16-BEAA-AD756F909797}
+	EndGlobalSection
+EndGlobal
