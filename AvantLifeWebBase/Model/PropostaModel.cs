@@ -37,5 +37,7 @@ namespace AvantLifeWebBase.Model
         public Guid IdUsuario { get; set; }
 
         public Guid IdEmpresa { get; set; }
+
+        public String Observacao { get; set; }
     }
 }
