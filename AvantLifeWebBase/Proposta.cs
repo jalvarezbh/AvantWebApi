@@ -175,7 +175,7 @@ namespace AvantLifeWebBase
             }
         }
 
-        public void IncluirProposta(PropostaModel proposta)
+        public PropostaModel IncluirProposta(PropostaModel proposta)
         {
             try
             {
@@ -209,7 +209,8 @@ namespace AvantLifeWebBase
                                        ATIVO,       
                                        OBSERVACAO,
                                        ID_USUARIO,        
-                                       ID_EMPRESA)    
+                                       ID_EMPRESA)  
+                                       OUTPUT INSERTED.ID
                                        VALUES (
                                        '{proposta.Nome}',
                                        '{proposta.Celular}',
@@ -230,10 +231,12 @@ namespace AvantLifeWebBase
                                        '{proposta.IdEmpresa}')";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.ExecuteNonQuery();                        
+                    {                       
+                        proposta.Id = (Guid)command.ExecuteScalar();
                     }
                 }
+
+                return proposta;
             }
             catch (Exception e)
             {
@@ -279,6 +282,74 @@ namespace AvantLifeWebBase
                                          AND ID_EMPRESA = '{proposta.IdEmpresa}'";
 
                    
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void ConfirmarProposta(PropostaModel proposta)
+        {
+            try
+            {
+                if (proposta.IdUsuario == null || proposta.IdEmpresa == null)
+                    throw new Exception("Usuário sem permissão.");
+                               
+                string dataInicio = DateTime.Now.ToString("yyyy-MM-dd");
+
+                using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
+                {
+                    connection.Open();
+
+                    String query = $@" UPDATE PROPOSTA SET 
+                                       DATA_INICIO = '{dataInicio}',       
+                                       SITUACAO = 'Confirmado'          
+                                       WHERE ID = '{proposta.Id}'
+                                         AND ID_USUARIO = '{proposta.IdUsuario}'
+                                         AND ID_EMPRESA = '{proposta.IdEmpresa}'";
+
+
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void CancelarProposta(PropostaModel proposta)
+        {
+            try
+            {
+                if (proposta.IdUsuario == null || proposta.IdEmpresa == null)
+                    throw new Exception("Usuário sem permissão.");
+
+                string observacao ="Proposta Cancelada no dia "+ DateTime.Now.ToString("dd/MM/yyyy");
+
+                using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
+                {
+                    connection.Open();
+
+                    String query = $@" UPDATE PROPOSTA SET 
+                                       OBSERVACAO = '{observacao}',       
+                                       SITUACAO = 'Cancelado'          
+                                       WHERE ID = '{proposta.Id}'
+                                         AND ID_USUARIO = '{proposta.IdUsuario}'
+                                         AND ID_EMPRESA = '{proposta.IdEmpresa}'";
+
+
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {

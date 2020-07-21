@@ -65,8 +65,8 @@ namespace AvantLifeWeb.Controllers
         {
             try
             {
-                proposta.IncluirProposta(registro);
-                return Ok();
+                PropostaModel incluido = proposta.IncluirProposta(registro);
+                return Ok(incluido);
             }
             catch (Exception ex)
             {
@@ -82,7 +82,41 @@ namespace AvantLifeWeb.Controllers
             try
             {
                 proposta.AlterarProposta(registro);
-                return Ok();
+                return Ok(registro);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
+
+        [ActionName("ConfirmarProposta")]
+        [HttpPut]
+        public IHttpActionResult ConfirmarProposta(PropostaModel registro)
+        {
+            try
+            {
+                proposta.ConfirmarProposta(registro);
+                var retorno = proposta.BuscarProposta(registro.Id.ToString(), registro.IdUsuario.ToString(), registro.IdEmpresa.ToString());
+                return Ok(retorno);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
+
+        [ActionName("CancelarProposta")]
+        [HttpPut]
+        public IHttpActionResult CancelarProposta(PropostaModel registro)
+        {
+            try
+            {
+                proposta.CancelarProposta(registro);
+                var retorno = proposta.BuscarProposta(registro.Id.ToString(), registro.IdUsuario.ToString(), registro.IdEmpresa.ToString());
+                return Ok(retorno);
             }
             catch (Exception ex)
             {

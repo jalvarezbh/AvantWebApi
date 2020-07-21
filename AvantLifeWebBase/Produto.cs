@@ -1,6 +1,7 @@
 ﻿using AvantLifeWebBase.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace AvantLifeWebBase
@@ -82,6 +83,49 @@ namespace AvantLifeWebBase
                             }
 
                             return faixas;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public ProdutoValorModel BuscarProdutoValorFluxo(string id)
+        {
+            try
+            {
+                ProdutoValorModel registro = new ProdutoValorModel();
+                using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
+                {
+                    connection.Open();
+
+                    String query = $@" SELECT *
+                                       FROM PRODUTO_VALORES
+                                       WHERE ID = '{id}'";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.SingleRow))
+                        {
+                            if (!reader.HasRows)
+                                throw new Exception("Produto valor não encontrado ou inativo.");
+
+                            while (reader.Read())
+                            {
+                                registro.Id = Guid.Parse(reader["ID"].ToString());
+                                registro.FaixaEtaria = reader["FAIXA_ETARIA"].ToString();
+                                registro.ComissaoInicial = Convert.ToDecimal(reader["COMISSAO_INICIAL"].ToString());
+                                registro.ComissaoAnual = Convert.ToDecimal(reader["COMISSAO_ANUAL"].ToString());
+                                registro.ComissaoFinal = Convert.ToDecimal(reader["COMISSAO_FINAL"].ToString());
+                                registro.CapitalSegurado = Convert.ToDecimal(reader["CAPITAL_SEGURADO"].ToString());
+                                registro.PremioMinimo = Convert.ToDecimal(reader["PREMIO_MINIMO"].ToString());
+                                registro.Ativo = Convert.ToBoolean(reader["ATIVO"].ToString());
+                            }
+
+                            return registro;
                         }
                     }
                 }
