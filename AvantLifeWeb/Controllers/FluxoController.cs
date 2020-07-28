@@ -1,6 +1,7 @@
 ﻿using AvantLifeWebBase;
 using AvantLifeWebBase.Model;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 
@@ -33,6 +34,55 @@ namespace AvantLifeWeb.Controllers
             try
             {
                 fluxo.InativarFluxoMensalCancelarProposta(registro);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
+
+        [ActionName("BuscarFluxoMensalComissaoSemana")]
+        [HttpGet]
+        public IHttpActionResult BuscarFluxoMensalComissaoSemana(string idusuario, string idempresa, string dataInicio , string dataFinal)
+        {
+            try
+            {
+                var retorno = fluxo.BuscarFluxoMensalComissaoSemana(idusuario, idempresa, dataInicio, dataFinal);
+                return Ok(retorno);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
+
+
+        [ActionName("ConfirmarFluxoMensalLancamentos")]
+        [HttpPut]
+        public IHttpActionResult ConfirmarFluxoMensalLancamentos(FluxoAcaoModel parametros)
+        {
+            try
+            {
+                fluxo.ConfirmarFluxoMensalLancamentos(parametros.Ids , parametros.IdUsuario, parametros.IdEmpresa);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
+
+        [ActionName("CancelarFluxoMensalLancamentos")]
+        [HttpPut]
+        public IHttpActionResult CancelarFluxoMensalLancamentos(FluxoAcaoModel parametros)
+        {
+            try
+            {
+                fluxo.CancelarFluxoMensalLancamentos(parametros.Ids, parametros.IdUsuario, parametros.IdEmpresa);
                 return Ok();
             }
             catch (Exception ex)

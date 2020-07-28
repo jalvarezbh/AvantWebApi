@@ -24,7 +24,7 @@ namespace AvantLifeWebBase.Model
 
         public DateTime DataPrevista { get; set; }
 
-        public DateTime DataConfirmacao { get; set; }
+        public DateTime? DataConfirmacao { get; set; }
 
         public int DiaReferencia { get; set; }
 
@@ -58,6 +58,10 @@ namespace AvantLifeWebBase.Model
 
         [EnumMember]
         [Description("Atrasado")]
-        Atrasado = 2
+        Atrasado = 2,
+
+        [EnumMember]
+        [Description("Cancelado")]
+        Cancelado = 3
     }
 }

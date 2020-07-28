@@ -45,6 +45,7 @@
     <Compile Include="Base.cs" />
     <Compile Include="Fluxo.cs" />
     <Compile Include="Model\AutoCompleteModel.cs" />
+    <Compile Include="Model\FluxoAcaoModel.cs" />
     <Compile Include="Model\FluxoMensalModel.cs" />
     <Compile Include="Model\LoginModel.cs" />
     <Compile Include="Model\ProdutoValorModel.cs" />
