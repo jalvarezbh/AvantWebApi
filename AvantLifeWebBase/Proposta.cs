@@ -175,6 +175,48 @@ namespace AvantLifeWebBase
             }
         }
 
+        public List<TotalizadorModel> BuscarPropostasInicioMes(string id_usuario, string id_empresa, int mes, int ano)
+        {
+            try
+            {
+                List<TotalizadorModel> totais = new List<TotalizadorModel>();
+                using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
+                {
+                    connection.Open();
+
+                    String query = $@"  SELECT SITUACAO, COUNT(*) AS NUMERO
+                                        FROM PROPOSTA
+                                        WHERE ID_USUARIO = '{id_usuario}' 
+                                         AND ID_EMPRESA = '{id_empresa}'
+                                         AND DATEPART(month, DATA_INICIO) = {mes}
+                                         AND DATEPART(year, DATA_INICIO) = {ano}
+                                        GROUP BY SITUACAO";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                TotalizadorModel contador = new TotalizadorModel();                              
+                                contador.Descricao = reader["SITUACAO"].ToString();
+                                contador.Valor = reader["NUMERO"] != null? Convert.ToDecimal(reader["NUMERO"].ToString()): 0;
+                           
+                                totais.Add(contador);
+
+                            }
+
+                            return totais;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public PropostaModel BuscarProposta(string id, string id_usuario, string id_empresa)
         {
             try

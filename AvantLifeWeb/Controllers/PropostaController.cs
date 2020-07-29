@@ -58,6 +58,22 @@ namespace AvantLifeWeb.Controllers
 
         }
 
+        [ActionName("BuscarPropostasInicioMes")]
+        [HttpGet]
+        public IHttpActionResult BuscarPropostasInicioMes(string idusuario, string idempresa, int mes, int ano)
+        {
+            try
+            {
+                var retorno = proposta.BuscarPropostasInicioMes(idusuario, idempresa, mes, ano);
+                return Ok(retorno);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
+
         [ActionName("BuscarProposta")]
         [HttpGet]
         public IHttpActionResult BuscarProposta(string id, string idusuario, string idempresa)

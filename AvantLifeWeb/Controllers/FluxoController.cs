@@ -59,6 +59,21 @@ namespace AvantLifeWeb.Controllers
 
         }
 
+        [ActionName("BuscarFluxoMensalInicioMes")]
+        [HttpGet]
+        public IHttpActionResult BuscarFluxoMensalInicioMes(string idusuario, string idempresa, int mes, int ano)
+        {
+            try
+            {
+                var retorno = fluxo.BuscarFluxoMensalInicioMes(idusuario, idempresa, mes, ano);
+                return Ok(retorno);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
 
         [ActionName("ConfirmarFluxoMensalLancamentos")]
         [HttpPut]

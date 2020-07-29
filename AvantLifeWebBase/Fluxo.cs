@@ -213,6 +213,49 @@ namespace AvantLifeWebBase
             }
         }
 
+        public List<TotalizadorModel> BuscarFluxoMensalInicioMes(string id_usuario, string id_empresa, int mes, int ano)
+        {
+            try
+            {
+                List<TotalizadorModel> totais = new List<TotalizadorModel>();
+                using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
+                {
+                    connection.Open();
+
+                    String query = $@"  SELECT SITUACAO, SUM(VALOR_COMISSAO) AS NUMERO
+                                        FROM FLUXO_MENSAL
+                                        WHERE ATIVO = 1 
+                                         AND ID_USUARIO = '{id_usuario}' 
+                                         AND ID_EMPRESA = '{id_empresa}'
+                                         AND MES_REFERENCIA = {mes}
+                                         AND ANO_REFERENCIA = {ano}
+                                        GROUP BY SITUACAO";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                TotalizadorModel contador = new TotalizadorModel();
+                                contador.Descricao = reader["SITUACAO"].ToString();
+                                contador.Valor = reader["NUMERO"] != null ? Convert.ToDecimal(reader["NUMERO"].ToString()) : 0;
+
+                                totais.Add(contador);
+
+                            }
+
+                            return totais;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public void ConfirmarFluxoMensalLancamentos(List<string> fluxos_id, string id_usuario, string id_empresa)
         {
             try

@@ -49,6 +49,7 @@
     <Compile Include="Model\FluxoMensalModel.cs" />
     <Compile Include="Model\LoginModel.cs" />
     <Compile Include="Model\ProdutoValorModel.cs" />
+    <Compile Include="Model\TotalizadorModel.cs" />
     <Compile Include="Proposta.cs" />
     <Compile Include="Model\PropostaModel.cs" />
     <Compile Include="Model\SenhaModel.cs" />
