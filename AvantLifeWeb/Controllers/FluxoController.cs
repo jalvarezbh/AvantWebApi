@@ -106,5 +106,24 @@ namespace AvantLifeWeb.Controllers
             }
 
         }
+
+        [ActionName("BuscarRelatorioFluxoMensal")]
+        [HttpGet]
+        public IHttpActionResult BuscarRelatorioFluxoMensal(string nome, string situacao, 
+            string dataInicial, string dataFinal, string numeroApolice, string produto, 
+            string faixa, string idusuario, string idempresa)
+        {
+            try
+            {
+                var retorno = fluxo.BuscarRelatorioFluxoMensal(nome,situacao,dataInicial,dataFinal,numeroApolice,produto,faixa, idusuario, idempresa);
+                return Ok(retorno);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
+
     }
 }

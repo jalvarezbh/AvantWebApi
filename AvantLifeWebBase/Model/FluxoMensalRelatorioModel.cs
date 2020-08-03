@@ -1,10 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.Serialization;
 
 namespace AvantLifeWebBase.Model
 {
-    public class FluxoMensalModel
+    public class FluxoMensalRelatorioModel
     {
         public Guid Id { get; set; }
 
@@ -40,24 +38,20 @@ namespace AvantLifeWebBase.Model
 
         public Guid IdEmpresa { get; set; }
 
-    }
-        
-    public enum Situacao : short
-    {
-        [EnumMember]
-        [Description("Pendente")]
-        Pendente = 0,
+        public String ProdutoDescricao { get; set; }
 
-        [EnumMember]
-        [Description("Pago")]
-        Pago = 1,
+        public String ProdutoCobertura { get; set; }
 
-        [EnumMember]
-        [Description("Atrasado")]
-        Atrasado = 2,
+        public String FaixaEtaria { get; set; }
 
-        [EnumMember]
-        [Description("Cancelado")]
-        Cancelado = 3
+        public Decimal ComissaoInicial { get; set; }
+
+        public Decimal ComissaoAnual { get; set; }
+
+        public Decimal ComissaoFinal { get; set; }
+
+        public Decimal CapitalSegurado { get; set; }
+
+        public Decimal PremioMinimo { get; set; }
     }
 }

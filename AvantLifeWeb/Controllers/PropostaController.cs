@@ -74,6 +74,24 @@ namespace AvantLifeWeb.Controllers
 
         }
 
+        [ActionName("BuscarRelatorioPropostas")]
+        [HttpGet]
+        public IHttpActionResult BuscarRelatorioPropostas(string nome, string situacao,
+          string dataInicial, string dataFinal, string numeroApolice, string produto,
+          string faixa, string idusuario, string idempresa)
+        {
+            try
+            {
+                var retorno = proposta.BuscarRelatorioPropostas(nome, situacao, dataInicial, dataFinal, numeroApolice, produto, faixa, idusuario, idempresa);
+                return Ok(retorno);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
+
         [ActionName("BuscarProposta")]
         [HttpGet]
         public IHttpActionResult BuscarProposta(string id, string idusuario, string idempresa)
