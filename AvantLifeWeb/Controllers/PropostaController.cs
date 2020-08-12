@@ -53,6 +53,9 @@ namespace AvantLifeWeb.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.Message.Contains("login"))
+                    return Content(HttpStatusCode.Unauthorized, ex.Message);
+
                 return Content(HttpStatusCode.BadRequest, ex.Message);
             }
 
@@ -92,6 +95,22 @@ namespace AvantLifeWeb.Controllers
 
         }
 
+        [ActionName("BuscarRelatorioClientes")]
+        [HttpGet]
+        public IHttpActionResult BuscarRelatorioClientes(string nome, string mesInicial, 
+            string mesFinal, string possuiFilhos, string idusuario, string idempresa)
+        {
+            try
+            {
+                var retorno = proposta.BuscarRelatorioClientes(nome, mesInicial, mesFinal, possuiFilhos, idusuario, idempresa);
+                return Ok(retorno);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
+
         [ActionName("BuscarProposta")]
         [HttpGet]
         public IHttpActionResult BuscarProposta(string id, string idusuario, string idempresa)
@@ -119,6 +138,9 @@ namespace AvantLifeWeb.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.Message.Contains("login"))
+                    return Content(HttpStatusCode.Unauthorized, ex.Message);
+
                 return Content(HttpStatusCode.BadRequest, ex.Message);
             }
 

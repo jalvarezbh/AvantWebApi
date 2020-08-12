@@ -419,5 +419,33 @@ namespace AvantLifeWebBase
                 throw e;
             }
         }
+
+        public void AtualizaFluxoMensalAtrasadoUsuario(string id_usuario)
+        {
+            try
+            {
+                string dataAtrasado = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd HH:mm:ss");
+                using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
+                {
+                    connection.Open();
+
+                    String query = $@" UPDATE FLUXO_MENSAL 
+                                       SET SITUACAO = {(int)Situacao.Atrasado}
+                                       WHERE ATIVO = 1 
+                                         AND ID_USUARIO = '{id_usuario}'
+                                         AND SITUACAO = {(int)Situacao.Pendente}
+                                         AND DATA_PREVISTA < '{dataAtrasado}'";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

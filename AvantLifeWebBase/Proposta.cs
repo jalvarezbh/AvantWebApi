@@ -123,6 +123,9 @@ namespace AvantLifeWebBase
         {
             try
             {
+                if (!ValidarTempoAcesso(id_usuario))
+                    throw new Exception("Tempo expirado necessário novo login.");
+
                 List<PropostaModel> propostas = new List<PropostaModel>();
                 using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
                 {
@@ -231,17 +234,17 @@ namespace AvantLifeWebBase
                                                PROD.DESCRICAO AS PRODUTO_DESCRICAO,
                                                PROD.COBERTURA_ADICIONAL AS COBERTURA_ADICIONAL,
                                                F.*
-                                        FROM PROPOSTA P ON FM.ID_PROPOSTA = P.ID
+                                        FROM PROPOSTA P
                                         INNER JOIN PRODUTO PROD ON P.ID_PRODUTO = PROD.ID
                                         INNER JOIN PRODUTO_VALORES F ON P.ID_PRODUTO_VALORES = F.ID
-                                        WHERE FM.ID_USUARIO = '{id_usuario}' 
-                                          AND FM.ID_EMPRESA = '{id_empresa}' ";
+                                        WHERE P.ID_USUARIO = '{id_usuario}' 
+                                          AND P.ID_EMPRESA = '{id_empresa}' ";
 
                     if (!string.IsNullOrEmpty(nome))
                         query += $"AND P.NOME LIKE '%{nome}%' ";
 
                     if (!string.IsNullOrEmpty(situacao))
-                        query += $"AND P.SITUACAO = {situacao} ";
+                        query += $"AND P.SITUACAO = '{situacao}' ";
 
                     if (!string.IsNullOrEmpty(dataInicial))
                     {
@@ -301,6 +304,65 @@ namespace AvantLifeWebBase
                                 proposta.PremioMinimo = Convert.ToDecimal(reader["PREMIO_MINIMO"].ToString());
                                 propostas.Add(proposta);
 
+                            }
+
+                            return propostas;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<PropostaRelatorioModel> BuscarRelatorioClientes(string nome, string mesInicial, 
+            string mesFinal, string possuiFilhos, string id_usuario, string id_empresa)
+        {
+            try
+            {
+                List<PropostaRelatorioModel> propostas = new List<PropostaRelatorioModel>();
+                using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
+                {
+                    connection.Open();
+
+                    String query = $@"  SELECT P.*
+                                        FROM PROPOSTA P                                        
+                                        WHERE P.ID_USUARIO = '{id_usuario}' 
+                                          AND P.ID_EMPRESA = '{id_empresa}' ";
+
+                    if (!string.IsNullOrEmpty(nome))
+                        query += $"AND P.NOME LIKE '%{nome}%' ";
+
+                    if (!string.IsNullOrEmpty(possuiFilhos))
+                        query += $"AND P.POSSUI_FILHOS = '{possuiFilhos}' ";
+
+                    if (!string.IsNullOrEmpty(mesInicial))
+                        query += $"AND DATEPART(month, P.DATA_NASCIMENTO) >= {mesInicial} ";
+                    
+
+                    if (!string.IsNullOrEmpty(mesFinal))
+                        query += $"AND DATEPART(month, P.DATA_NASCIMENTO) <= {mesFinal} ";
+
+                    query += $"ORDER BY P.DATA_NASCIMENTO";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                PropostaRelatorioModel proposta = new PropostaRelatorioModel();
+                                proposta.Id = Guid.Parse(reader["ID"].ToString());
+                                proposta.Nome = reader["NOME"].ToString();
+                                proposta.Celular = reader["CELULAR"].ToString();
+                                proposta.Email = reader["EMAIL"].ToString();
+                                proposta.DataNascimento = Convert.ToDateTime(reader["DATA_NASCIMENTO"].ToString());
+                                proposta.PossuiFilho = Convert.ToBoolean(reader["POSSUI_FILHOS"].ToString());                                
+                                proposta.IdUsuario = Guid.Parse(reader["ID_USUARIO"].ToString());
+                                proposta.IdEmpresa = Guid.Parse(reader["ID_EMPRESA"].ToString());  
+                                propostas.Add(proposta);
                             }
 
                             return propostas;
@@ -376,6 +438,9 @@ namespace AvantLifeWebBase
             {
                 if (proposta.IdUsuario == null || proposta.IdEmpresa == null)
                     throw new Exception("Usuário sem permissão.");
+
+                if(!ValidarTempoAcesso(proposta.IdUsuario.ToString()))
+                    throw new Exception("Tempo expirado necessário novo login.");
 
                 String celular = Regex.Replace(proposta.Celular, @"[^\w\d]", "");
                 proposta.Celular = celular;

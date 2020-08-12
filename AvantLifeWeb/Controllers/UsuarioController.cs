@@ -57,5 +57,37 @@ namespace AvantLifeWeb.Controllers
             }
 
         }
+
+        [ActionName("AlterarSenhaUsuarioToken")]
+        [HttpPut]
+        public IHttpActionResult AlterarSenhaUsuarioToken(SenhaModel registro)
+        {
+            try
+            {
+                usuario.AlterarSenhaUsuarioToken(registro);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
+
+        [ActionName("InserirUsuario")]
+        [HttpPost]
+        public IHttpActionResult InserirUsuario(UsuarioModel registro)
+        {
+            try
+            {
+                var retorno = usuario.InserirUsuario(registro);
+                return Ok(retorno);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+        }
     }
 }
