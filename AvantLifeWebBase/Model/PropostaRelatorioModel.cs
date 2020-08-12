@@ -14,6 +14,8 @@ namespace AvantLifeWebBase.Model
 
         public DateTime DataNascimento { get; set; }
 
+        public String Genero { get; set; }
+
         public bool PossuiFilho { get; set; }
 
         public long NumeroApolice { get; set; }

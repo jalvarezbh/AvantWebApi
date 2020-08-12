@@ -434,7 +434,7 @@ namespace AvantLifeWebBase
                     string linha2 = Linha(true, "Plano Mensal: R$ 100,00", null);
                     string linha3 = Linha(true, "Plano Semestral: R$ 480,00", null);
                     string linha4 = Linha(true, "Plano Anual: R$ 720,00", null);
-                    string linha5 = Linha(false, "Gentileza responder este e-mail com o plano escolhido.", null);
+                    string linha5 = Linha(false, "Gentileza responder este e-mail com o plano escolhido ou ligar para (31)98860-8926.", null);
                     string linha6 = Linha(false, "Será encaminhado um boleto no valor correspondente para efetuar o pagamento com prazo de 3 dias úteis.", null); 
                     html = html.Replace("[LINHA]", linha1 + linha2 + linha3 + linha4 + linha5 + linha6);
                 }
@@ -511,7 +511,7 @@ namespace AvantLifeWebBase
 
 
                     string linha1 = Linha(false, "Para redefinir a senha click no link abaixo:", null);
-                    string linha2 = Linha(false, "Link Avant Life", $"http://localhost:4200/redefinir?key={login.Id}&token={login.Senha}");
+                    string linha2 = Linha(false, "Link Avant Life", $"https://avantlife.com.br/redefinir?key={login.Id}&token={login.Senha}");
                     string linha3 = Linha(false, "Caso não tenha solicitado, favor desconsiderar o e-mail.", null);
 
                     html = html.Replace("[LINHA]", linha1 + linha2 + linha3);

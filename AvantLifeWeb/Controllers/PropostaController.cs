@@ -98,11 +98,11 @@ namespace AvantLifeWeb.Controllers
         [ActionName("BuscarRelatorioClientes")]
         [HttpGet]
         public IHttpActionResult BuscarRelatorioClientes(string nome, string mesInicial, 
-            string mesFinal, string possuiFilhos, string idusuario, string idempresa)
+            string mesFinal, string possuiFilhos,string genero, string idusuario, string idempresa)
         {
             try
             {
-                var retorno = proposta.BuscarRelatorioClientes(nome, mesInicial, mesFinal, possuiFilhos, idusuario, idempresa);
+                var retorno = proposta.BuscarRelatorioClientes(nome, mesInicial, mesFinal, possuiFilhos, genero, idusuario, idempresa);
                 return Ok(retorno);
             }
             catch (Exception ex)

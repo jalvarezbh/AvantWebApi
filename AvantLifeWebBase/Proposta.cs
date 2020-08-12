@@ -37,6 +37,7 @@ namespace AvantLifeWebBase
                                 proposta.Celular = reader["CELULAR"].ToString();
                                 proposta.Email = reader["EMAIL"].ToString();
                                 proposta.DataNascimento = Convert.ToDateTime(reader["DATA_NASCIMENTO"].ToString());
+                                proposta.Genero = reader["GENERO"].ToString();
                                 proposta.PossuiFilho = Convert.ToBoolean(reader["POSSUI_FILHOS"].ToString());
                                 proposta.NumeroApolice = Convert.ToInt32(reader["NUMERO_APOLICE"].ToString());
                                 proposta.IdProduto = Guid.Parse(reader["ID_PRODUTO"].ToString());
@@ -91,6 +92,7 @@ namespace AvantLifeWebBase
                                 proposta.Celular = reader["CELULAR"].ToString();
                                 proposta.Email = reader["EMAIL"].ToString();
                                 proposta.DataNascimento = Convert.ToDateTime(reader["DATA_NASCIMENTO"].ToString());
+                                proposta.Genero = reader["GENERO"].ToString();
                                 proposta.PossuiFilho = Convert.ToBoolean(reader["POSSUI_FILHOS"].ToString());
                                 proposta.NumeroApolice = Convert.ToInt32(reader["NUMERO_APOLICE"].ToString());
                                 proposta.IdProduto = Guid.Parse(reader["ID_PRODUTO"].ToString());
@@ -150,6 +152,7 @@ namespace AvantLifeWebBase
                                 proposta.Celular = reader["CELULAR"].ToString();
                                 proposta.Email = reader["EMAIL"].ToString();
                                 proposta.DataNascimento = Convert.ToDateTime(reader["DATA_NASCIMENTO"].ToString());
+                                proposta.Genero = reader["GENERO"].ToString();
                                 proposta.PossuiFilho = Convert.ToBoolean(reader["POSSUI_FILHOS"].ToString());
                                 proposta.NumeroApolice = Convert.ToInt32(reader["NUMERO_APOLICE"].ToString());
                                 proposta.IdProduto = Guid.Parse(reader["ID_PRODUTO"].ToString());
@@ -281,6 +284,7 @@ namespace AvantLifeWebBase
                                 proposta.Celular = reader["CELULAR"].ToString();
                                 proposta.Email = reader["EMAIL"].ToString();
                                 proposta.DataNascimento = Convert.ToDateTime(reader["DATA_NASCIMENTO"].ToString());
+                                proposta.Genero = reader["GENERO"].ToString();
                                 proposta.PossuiFilho = Convert.ToBoolean(reader["POSSUI_FILHOS"].ToString());
                                 proposta.NumeroApolice = Convert.ToInt32(reader["NUMERO_APOLICE"].ToString());
                                 proposta.IdProduto = Guid.Parse(reader["ID_PRODUTO"].ToString());
@@ -318,7 +322,7 @@ namespace AvantLifeWebBase
         }
 
         public List<PropostaRelatorioModel> BuscarRelatorioClientes(string nome, string mesInicial, 
-            string mesFinal, string possuiFilhos, string id_usuario, string id_empresa)
+            string mesFinal, string possuiFilhos, string genero, string id_usuario, string id_empresa)
         {
             try
             {
@@ -338,10 +342,12 @@ namespace AvantLifeWebBase
                     if (!string.IsNullOrEmpty(possuiFilhos))
                         query += $"AND P.POSSUI_FILHOS = '{possuiFilhos}' ";
 
+                    if (!string.IsNullOrEmpty(genero))
+                        query += $"AND (P.GENERO = '{genero}' OR P.GENERO IS NULL) ";
+
                     if (!string.IsNullOrEmpty(mesInicial))
                         query += $"AND DATEPART(month, P.DATA_NASCIMENTO) >= {mesInicial} ";
                     
-
                     if (!string.IsNullOrEmpty(mesFinal))
                         query += $"AND DATEPART(month, P.DATA_NASCIMENTO) <= {mesFinal} ";
 
@@ -359,7 +365,8 @@ namespace AvantLifeWebBase
                                 proposta.Celular = reader["CELULAR"].ToString();
                                 proposta.Email = reader["EMAIL"].ToString();
                                 proposta.DataNascimento = Convert.ToDateTime(reader["DATA_NASCIMENTO"].ToString());
-                                proposta.PossuiFilho = Convert.ToBoolean(reader["POSSUI_FILHOS"].ToString());                                
+                                proposta.PossuiFilho = Convert.ToBoolean(reader["POSSUI_FILHOS"].ToString());
+                                proposta.Genero = reader["GENERO"].ToString();                                
                                 proposta.IdUsuario = Guid.Parse(reader["ID_USUARIO"].ToString());
                                 proposta.IdEmpresa = Guid.Parse(reader["ID_EMPRESA"].ToString());  
                                 propostas.Add(proposta);
@@ -406,6 +413,7 @@ namespace AvantLifeWebBase
                                 proposta.Celular = reader["CELULAR"].ToString();
                                 proposta.Email = reader["EMAIL"].ToString();
                                 proposta.DataNascimento = Convert.ToDateTime(reader["DATA_NASCIMENTO"].ToString());
+                                proposta.Genero = reader["GENERO"].ToString();
                                 proposta.PossuiFilho = Convert.ToBoolean(reader["POSSUI_FILHOS"].ToString());
                                 proposta.NumeroApolice = Convert.ToInt32(reader["NUMERO_APOLICE"].ToString());
                                 proposta.IdProduto = Guid.Parse(reader["ID_PRODUTO"].ToString());
@@ -457,7 +465,8 @@ namespace AvantLifeWebBase
                                        CELULAR,           
                                        EMAIL,             
                                        DATA_NASCIMENTO,   
-                                       POSSUI_FILHOS,     
+                                       POSSUI_FILHOS,  
+                                       GENERO,
                                        NUMERO_APOLICE,    
                                        ID_PRODUTO,        
                                        ID_PRODUTO_VALORES,
@@ -477,6 +486,7 @@ namespace AvantLifeWebBase
                                        '{proposta.Email}',
                                        '{dataNascimento}',
                                        '{proposta.PossuiFilho}',
+                                       '{proposta.Genero}',
                                        {proposta.NumeroApolice},
                                        '{proposta.IdProduto}',
                                        '{proposta.IdProdutoValores}',
@@ -526,7 +536,8 @@ namespace AvantLifeWebBase
                                        CELULAR = '{proposta.Celular}',           
                                        EMAIL =  '{proposta.Email}',             
                                        DATA_NASCIMENTO = '{dataNascimento}',   
-                                       POSSUI_FILHOS = '{proposta.PossuiFilho}',     
+                                       POSSUI_FILHOS = '{proposta.PossuiFilho}',    
+                                       GENERO = '{proposta.Genero}',
                                        NUMERO_APOLICE = {proposta.NumeroApolice},    
                                        ID_PRODUTO = '{proposta.IdProduto}',        
                                        ID_PRODUTO_VALORES = '{proposta.IdProdutoValores}',
