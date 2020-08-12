@@ -56,6 +56,7 @@
     <Compile Include="Model\FluxoMensalRelatorioModel.cs" />
     <Compile Include="Model\FluxoMensalModel.cs" />
     <Compile Include="Model\LoginModel.cs" />
+    <Compile Include="Model\ProdutoRelatorioModel.cs" />
     <Compile Include="Model\ProdutoValorModel.cs" />
     <Compile Include="Model\PropostaRelatorioModel.cs" />
     <Compile Include="Model\TotalizadorModel.cs" />

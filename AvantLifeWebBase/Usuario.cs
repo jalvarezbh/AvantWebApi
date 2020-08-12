@@ -306,8 +306,7 @@ namespace AvantLifeWebBase
                     String query = $@" UPDATE USUARIO 
                                        SET SENHA = '{hashedNova}'
                                        WHERE ATIVO = 1 
-                                         AND ID = '{senha.Id}'
-                                         AND SENHA = '{senha.SenhaAtual}'";
+                                         AND ID = '{senha.Id}'";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {

@@ -40,5 +40,21 @@ namespace AvantLifeWeb.Controllers
             }
 
         }
+
+        [ActionName("BuscarRelatorioProdutos")]
+        [HttpGet]
+        public IHttpActionResult BuscarRelatorioProdutos(string descricao, string percentual,
+           string capitalSegurado, string idusuario, string idempresa)
+        {
+            try
+            {
+                var retorno = produto.BuscarRelatorioProdutos(descricao, percentual, capitalSegurado, idusuario, idempresa);
+                return Ok(retorno);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
     }
 }
