@@ -1,11 +1,11 @@
 ﻿using AvantLifeWebBase.Model;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -26,13 +26,9 @@ namespace AvantLifeWebBase
                 LoginModel login = new LoginModel();
 
                 byte[] salt = new byte[128 / 8];
-                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                                            password: senha,
-                                            salt: salt,
-                                            prf: KeyDerivationPrf.HMACSHA1,
-                                            iterationCount: 10000,
-                                            numBytesRequested: 256 / 8));
-
+                Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(senha, salt);
+                string hashed = Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256 / 8));
+              
                 using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
                 {
                     connection.Open();
@@ -248,19 +244,11 @@ namespace AvantLifeWebBase
                     throw new Exception("Campo Confirmar Senha Nova diferente do Campo Senha Nova.");
 
                 byte[] salt = new byte[128 / 8];
-                string hashedNova = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                                            password: senha.SenhaNova,
-                                            salt: salt,
-                                            prf: KeyDerivationPrf.HMACSHA1,
-                                            iterationCount: 10000,
-                                            numBytesRequested: 256 / 8));
+                Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(senha.SenhaNova, salt);
+                string hashedNova = Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256 / 8));
 
-                string hashedAtual = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                                           password: senha.SenhaAtual,
-                                           salt: salt,
-                                           prf: KeyDerivationPrf.HMACSHA1,
-                                           iterationCount: 10000,
-                                           numBytesRequested: 256 / 8));
+                Rfc2898DeriveBytes rfc2898DeriveBytesAtual = new Rfc2898DeriveBytes(senha.SenhaAtual, salt);
+                string hashedAtual = Convert.ToBase64String(rfc2898DeriveBytesAtual.GetBytes(256 / 8));               
 
                 using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
                 {
@@ -292,12 +280,8 @@ namespace AvantLifeWebBase
                     throw new Exception("Campo Confirmar Senha Nova diferente do Campo Senha Nova.");
 
                 byte[] salt = new byte[128 / 8];
-                string hashedNova = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                                            password: senha.SenhaNova,
-                                            salt: salt,
-                                            prf: KeyDerivationPrf.HMACSHA1,
-                                            iterationCount: 10000,
-                                            numBytesRequested: 256 / 8));                
+                Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(senha.SenhaNova, salt);
+                string hashedNova = Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256 / 8));                           
 
                 using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
                 {
@@ -334,12 +318,8 @@ namespace AvantLifeWebBase
                 string dataVigencia = DateTime.Now.AddDays(15).ToString("yyyy-MM-dd");
                 string ultimoLogin = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 byte[] salt = new byte[128 / 8];
-                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                                            password: usuario.Senha,
-                                            salt: salt,
-                                            prf: KeyDerivationPrf.HMACSHA1,
-                                            iterationCount: 10000,
-                                            numBytesRequested: 256 / 8));
+                Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(usuario.Senha, salt);
+                string hashed = Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256 / 8));              
 
                 using (SqlConnection connection = new SqlConnection(sqlConnection.ToString()))
                 {
@@ -445,9 +425,9 @@ namespace AvantLifeWebBase
 
                 var smtp = new SmtpClient
                 {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
+                    Host = "relay-hosting.secureserver.net",//"smtp.gmail.com",
+                    Port = 25, //587,
+                    EnableSsl = false,
                     Timeout = 10000,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
@@ -523,9 +503,9 @@ namespace AvantLifeWebBase
 
                 var smtp = new SmtpClient
                 {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
+                    Host = "relay-hosting.secureserver.net",//"smtp.gmail.com",
+                    Port = 25,//587,
+                    EnableSsl = false,
                     Timeout = 10000,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
