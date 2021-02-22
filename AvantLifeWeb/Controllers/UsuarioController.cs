@@ -27,7 +27,7 @@ namespace AvantLifeWeb.Controllers
         }
         
         [ActionName("AlterarUsuario")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult AlterarUsuario(UsuarioModel registro)
         {
             try
@@ -43,7 +43,7 @@ namespace AvantLifeWeb.Controllers
         }
 
         [ActionName("AlterarSenhaUsuario")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult AlterarSenhaUsuario(SenhaModel registro)
         {
             try
@@ -59,7 +59,7 @@ namespace AvantLifeWeb.Controllers
         }
 
         [ActionName("AlterarSenhaUsuarioToken")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult AlterarSenhaUsuarioToken(SenhaModel registro)
         {
             try

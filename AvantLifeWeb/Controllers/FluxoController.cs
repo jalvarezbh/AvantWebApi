@@ -28,7 +28,7 @@ namespace AvantLifeWeb.Controllers
         }
 
         [ActionName("InativarFluxoMensalCancelarProposta")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult InativarFluxoMensalCancelarProposta(PropostaModel registro)
         {
             try
@@ -76,7 +76,7 @@ namespace AvantLifeWeb.Controllers
         }
 
         [ActionName("ConfirmarFluxoMensalLancamentos")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult ConfirmarFluxoMensalLancamentos(FluxoAcaoModel parametros)
         {
             try
@@ -92,7 +92,7 @@ namespace AvantLifeWeb.Controllers
         }
 
         [ActionName("CancelarFluxoMensalLancamentos")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult CancelarFluxoMensalLancamentos(FluxoAcaoModel parametros)
         {
             try

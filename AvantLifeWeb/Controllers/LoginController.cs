@@ -1,5 +1,4 @@
-﻿
-using AvantLifeWebBase;
+﻿using AvantLifeWebBase;
 using AvantLifeWebBase.Model;
 using System;
 using System.Net;

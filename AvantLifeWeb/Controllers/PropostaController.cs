@@ -147,7 +147,7 @@ namespace AvantLifeWeb.Controllers
         }
 
         [ActionName("AlterarProposta")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult AlterarProposta(PropostaModel registro)
         {
             try
@@ -163,7 +163,7 @@ namespace AvantLifeWeb.Controllers
         }
 
         [ActionName("ConfirmarProposta")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult ConfirmarProposta(PropostaModel registro)
         {
             try
@@ -180,7 +180,7 @@ namespace AvantLifeWeb.Controllers
         }
 
         [ActionName("CancelarProposta")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult CancelarProposta(PropostaModel registro)
         {
             try
